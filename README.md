@@ -152,8 +152,6 @@ pip install nome_da_dependência && pip freeze > requirements.txt
 pip install -r requirements.txt
 ```
 
-
-
 ## Dependências
 
 | Dependência              | Descrição / (Dependência Pai)         |
@@ -161,3 +159,12 @@ pip install -r requirements.txt
 | pip                      | Gestor de Pacotes (Python)            |
 | setuptools               | Ferramentas (Python)                  |
 | discord.py               | Discord Framework                     |
+
+
+
+## Usefull documentation
+
+| Dependência                                               |
+| ----------------------------------------------------------|
+| https://pypi.org/project/discord.py/                      |
+| https://medium.com/better-programming/coding-a-discord-bot-with-python-64da9d6cade7 |
