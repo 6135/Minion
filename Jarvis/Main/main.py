@@ -16,7 +16,8 @@ class Jarvis(discord.Client):
 		# CHECKS IF THE MESSAGE THAT WAS SENT IS EQUAL TO "HELLO".
 		if message.content == "hello":
 			# SENDS BACK A MESSAGE TO THE CHANNEL.
-			await message.channel.send("hey dirtbag")
+			print(message)
+			await message.channel.send("hey " + message.author.name)
 	async def on_ready(self):
 		print('Logged on as', self.user)
 	 
