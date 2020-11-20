@@ -8,10 +8,11 @@ class RPS:
         await rpsMsg.add_reaction("📰")
         await rpsMsg.add_reaction("✂")
 
+
     def jarvisChoice(self):
         random.choice("⛰","📰","✂")
 
-    def gameResult(self,userChoice,jarvisChoice):
+    def gameResult(self,userChoice,jarvisChoice=jarvisChoice()):
         if userChoice == "⛰" and jarvisChoice == "✂" or userChoice == "📰" and jarvisChoice == "⛰" or userChoice == "✂" and jarvisChoice == "📰":
             return "You won!"
         elif userChoice == jarvisChoice:
