@@ -21,7 +21,9 @@ async def reactBack(client,message):
 	msgEmbed = await message.channel.send(embed=embed)
 
 	def checkReactBack(reaction,user):
-		return "Jarvis - RB" in message and user == message.author
+		return reaction.message.id == msgEmbed.id and\
+			   client.user == reaction.message.author and\
+			   "Jarvis - RB" == reaction.message.embeds[0].author.name
 
 	try:
 		reaction, user = await client.wait_for('reaction_add', timeout=120.0,check=checkReactBack)
@@ -29,8 +31,11 @@ async def reactBack(client,message):
 		await message.channel.send("You took to long to react!")
 	else: await message.channel.send("❤")
 
-
-
+async def prune(client,message):
+	num = re.search("^("+Jarvis().STARTING_SUBSTRING+")([A-z]*)([0-9]*)", message.content).group(2)
+	if num is not None and int(num):
+		while num > 0:
+			await pass
 class Jarvis(discord.Client):
 
 	async def on_ready(self):
@@ -46,9 +51,9 @@ class Jarvis(discord.Client):
 			funct = self.BOT_KEYWORDS.get(order)
 			if funct == None:
 				await message.channel.send("Your command seems incorrect, try `"+ self.STARTING_SUBSTRING + "help` for more details")
-				if funct.__name__ == "RPS":
-					rps = RPS()
-					await rps.rps(client=self, message=message)
+			elif funct.__name__ == "RPS":
+				rps = RPS()
+				await rps.rps(client=self, message=message)
 			else: await funct(self,message)
 
 	async def on_reaction_add(self,reaction,user):
@@ -88,5 +93,4 @@ class Jarvis(discord.Client):
 
 # EXECUTES THE BOT WITH THE SPECIFIED TOKEN. TOKEN HAS BEEN REMOVED AND USED JUST AS AN EXAMPLE.
 bot = Jarvis()
-print(BOT_TOKEN)
 bot.run(BOT_TOKEN) 
