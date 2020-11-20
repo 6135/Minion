@@ -31,11 +31,11 @@ async def reactBack(client,message):
 		await message.channel.send("You took to long to react!")
 	else: await message.channel.send("❤")
 
-async def prune(client,message):
-	num = re.search("^("+Jarvis().STARTING_SUBSTRING+")([A-z]*)([0-9]*)", message.content).group(2)
-	if num is not None and int(num):
-		while num > 0:
-			await pass
+#async def prune(client,message):
+#	num = re.search("^("+Jarvis().STARTING_SUBSTRING+")([A-z]*)([0-9]*)", message.content).group(2)
+#	if num is not None and int(num):
+#		while num > 0:
+#			await pass
 class Jarvis(discord.Client):
 
 	async def on_ready(self):
@@ -51,13 +51,10 @@ class Jarvis(discord.Client):
 			funct = self.BOT_KEYWORDS.get(order)
 			if funct == None:
 				await message.channel.send("Your command seems incorrect, try `"+ self.STARTING_SUBSTRING + "help` for more details")
-			elif funct.__name__ == "RPS":
+			elif funct.__name__ == "rps":
 				rps = RPS()
 				await rps.rps(client=self, message=message)
 			else: await funct(self,message)
-
-	async def on_reaction_add(self,reaction,user):
-		print(reaction)
 
 	async def talkback(self, message):
 		tbSize = 8 + (len(self.STARTING_SUBSTRING))
