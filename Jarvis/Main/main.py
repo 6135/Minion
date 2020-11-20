@@ -15,9 +15,9 @@ class Jarvis(discord.Client):
 	async def on_message(self, message):
 		print(message)
 		# CHECKS IF THE MESSAGE THAT WAS SENT IS EQUAL TO "HELLO".
-		if message.content.startswith(STARTING_SUBSTRING) and " hello " in message.content:
+		if message.content.startswith(STARTING_SUBSTRING) and " hello" in message.content:
 			# SENDS BACK A MESSAGE TO THE CHANNEL.
-			await message.channel.send("hey " + message.author.name)
+			await message.channel.send("hey :thumbsup:" + message.author.name)
 			print("test")
 		
 	async def on_ready(self):
