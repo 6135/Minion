@@ -29,46 +29,34 @@ class Jarvis(discord.Client):
 			funct = self.BOT_KEYWORDS.get(order)
 			if funct == None:
 				await message.channel.send("Your command seems incorrect, try `"+ self.STARTING_SUBSTRING + "help` for more details")
-			elif funct.__name__ == "help":
-				await message.channel.send(embed=funct(self,message))
-			elif funct.__name__ == "rps":
-				rpsMsg=await message.channel.send(embed=funct(self,message))
-				await rpsMsg.add_reaction("⛰")
-				await rpsMsg.add_reaction("📰")
-				await rpsMsg.add_reaction("✂")
-				
-				
-			else: await message.channel.send(funct(self,message))
+			else: await funct(self,message)
 
 	async def on_reaction_add(self,reaction,user):
 		print(reaction)
 
-	def talkback(self, message):
+	async def talkback(self, message):
 		tbSize = 8 + (len(self.STARTING_SUBSTRING))
-		return message.author.name + " said: \n >" + message.content[tbSize:]
+		await message.channel.send(message.author.name + " said: \n >" + message.content[tbSize:])
 
-	def hello(self, message):
-		return "hey :thumbsup: " + message.author.name
+	async def hello(self, message):
+		await message.channel.send("hey :thumbsup: " + message.author.name)
 
-	def help(self, message):
+	async def help(self, message):
 		embed=discord.Embed(title="Help", description="Here's a list of all help usefull commands at your disposal, all commands should start with `"+self.STARTING_SUBSTRING +"`", color=0x80ff00)
 		embed.set_author(name="Jarvis")
 		embed.add_field(name="`"+ self.STARTING_SUBSTRING +"talkback`", value="I will say whatever you said to me right back at you!", inline=False)
 		embed.add_field(name="`"+ self.STARTING_SUBSTRING +"hello`", value="I respond with \"Hello\" right back!", inline=False)
 		embed.add_field(name="`"+ self.STARTING_SUBSTRING +"help`", value="I Think you know what this does...", inline=False)
 		embed.set_footer(text="Jarvis is licensed under CC BY-NC 4.0")
-		return embed
-	
-	def rps(self,message):
-		embed = discord.Embed(title="Rock, Paper, Scissor", description = "Choose a reaction to play the game!",color=0xa69ea8)
-		return embed
+		await message.channel.send(embed=embed)
+
 
 
 	STARTING_SUBSTRING = ">!"
 	BOT_KEYWORDS = {
 		'talkback': talkback,
 		'hello': hello,
-		'rps': rps,
+		'rps': RPS.rps,
 		'rd': 3,
 		'roll': 3,
 		'rolldice': 3,
