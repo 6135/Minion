@@ -17,13 +17,18 @@ BOT_TOKEN = os.getenv("BOT_TOKEN")
 
 async def reactBack(client,message):
 	embed=discord.Embed(title="React to this message", color=0x80ff00)
-	embed.set_author(name="Jarvis")
+	embed.set_author(name="Jarvis - RB")
 	msgEmbed = await message.channel.send(embed=embed)
+
+	def checkReactBack(reaction,user):
+		return "Jarvis - RB" in message and user == message.author
+
 	try:
-		reaction, user = await client.wait_for('reaction_add', timeout=120.0,check=None)
+		reaction, user = await client.wait_for('reaction_add', timeout=120.0,check=checkReactBack)
 	except asyncio.TimeoutError:
 		await message.channel.send("You took to long to react!")
 	else: await message.channel.send("❤")
+
 
 
 class Jarvis(discord.Client):
