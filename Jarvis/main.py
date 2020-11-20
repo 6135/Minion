@@ -2,13 +2,16 @@
 import os
 import discord
 import re
+from discord.colour import Color
 # Import load_dotenv function from dotenv module.
 from dotenv import load_dotenv
 from dotenv.main import find_dotenv
-
+from Packages.MiniGames import RPS
 # Loads the .env file that resides on the same level as the script.
 load_dotenv(find_dotenv())
 BOT_TOKEN = os.getenv("BOT_TOKEN")
+
+
 # Grab the API token from the .env file.
 
 class Jarvis(discord.Client):
@@ -28,8 +31,18 @@ class Jarvis(discord.Client):
 				await message.channel.send("Your command seems incorrect, try `"+ self.STARTING_SUBSTRING + "help` for more details")
 			elif funct.__name__ == "help":
 				await message.channel.send(embed=funct(self,message))
-			else: await message.channel.send(funct(self,message))
+			elif funct.__name__ == "rps":
+				rpsMsg=await message.channel.send(embed=funct(self,message))
+				await rpsMsg.add_reaction("⛰")
+				await rpsMsg.add_reaction("📰")
+				await rpsMsg.add_reaction("✂")
 				
+				
+			else: await message.channel.send(funct(self,message))
+
+	async def on_reaction_add(self,reaction,user):
+		print(reaction)
+
 	def talkback(self, message):
 		tbSize = 8 + (len(self.STARTING_SUBSTRING))
 		return message.author.name + " said: \n >" + message.content[tbSize:]
@@ -45,14 +58,17 @@ class Jarvis(discord.Client):
 		embed.add_field(name="`"+ self.STARTING_SUBSTRING +"help`", value="I Think you know what this does...", inline=False)
 		embed.set_footer(text="Jarvis is licensed under CC BY-NC 4.0")
 		return embed
-		
+	
+	def rps(self,message):
+		embed = discord.Embed(title="Rock, Paper, Scissor", description = "Choose a reaction to play the game!",color=0xa69ea8)
+		return embed
 
 
 	STARTING_SUBSTRING = ">!"
 	BOT_KEYWORDS = {
 		'talkback': talkback,
 		'hello': hello,
-		'rps': 2,
+		'rps': rps,
 		'rd': 3,
 		'roll': 3,
 		'rolldice': 3,
