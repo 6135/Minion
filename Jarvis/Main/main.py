@@ -23,4 +23,4 @@ class Jarvis(discord.Client):
 # EXECUTES THE BOT WITH THE SPECIFIED TOKEN. TOKEN HAS BEEN REMOVED AND USED JUST AS AN EXAMPLE.
 bot = Jarvis()
 print(BOT_TOKEN)
-bot.run(BOT_TOKEN)
+bot.run(BOT_TOKEN) 
