@@ -36,6 +36,7 @@ async def prune(client,message):
 	if num is not None and int(num) and int(num) < 1000:
 		await message.channel.purge(limit=int(num))
 	else: await message.channel.send("Woah there! You can't delete more than 1000 messages at once!")
+
 class Jarvis(discord.Client):
 
 	async def on_ready(self):
@@ -71,7 +72,10 @@ class Jarvis(discord.Client):
 		embed.set_author(name="Jarvis")
 		embed.add_field(name="`"+ self.STARTING_SUBSTRING +"talkback`", value="I will say whatever you said to me right back at you!", inline=False)
 		embed.add_field(name="`"+ self.STARTING_SUBSTRING +"hello`", value="I respond with \"Hello\" right back!", inline=False)
+		embed.add_field(name="`"+ self.STARTING_SUBSTRING +"rps`", value="Plays Rock Paper Scissors!", inline=False)
+		embed.add_field(name="`"+ self.STARTING_SUBSTRING +"coin`", value="Flips a coin, bet with your friends!", inline=False)
 		embed.add_field(name="`"+ self.STARTING_SUBSTRING +"help`", value="I Think you know what this does...", inline=False)
+		
 		embed.set_footer(text="Jarvis is licensed under CC BY-NC 4.0")
 		await message.channel.send(embed=embed)
 
