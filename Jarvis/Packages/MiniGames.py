@@ -1,6 +1,7 @@
 import asyncio
 import random
 import discord
+from discord import member
 
 
 class RPS:
@@ -11,22 +12,20 @@ class RPS:
         await rpsMsg.add_reaction("📰")
         await rpsMsg.add_reaction("✂")
 
-        def check(reaction,user):
+        def checkRPS(reaction,user):
             return reaction.message.id==rpsMsg.id and user == message.author
 
         try:
-            reaction, user = await client.wait_for('reaction_add',timeout=30.0,check=check)
+            reaction, user = await client.wait_for('reaction_add',timeout=30.0,check=checkRPS)
         except asyncio.TimeoutError:
             await client.delete_message(message)
         else: 
-            print(reaction)
-            print(user)
-            new_message = discord.Embed(title="Rock, Paper, Scissor", description = self.gameResult(reaction.emoji),color=0xa69ea8)
-            await message.edit(content=new_message)
-        
-
-    def gameResult(self,userChoice):
-        jarvisChoice=random.choice(["⛰","📰","✂"])
+            jarvisChoice=random.choice(["⛰","📰","✂"])
+            new_embed = discord.Embed(title=self.gameResult(reaction.emoji,jarvisChoice),color=0xa69ea8)
+            new_embed.add_field(name=reaction.emoji+" vs "+jarvisChoice,value=" ")
+            await rpsMsg.edit(embed=new_embed)
+           
+    def gameResult(self,userChoice,jarvisChoice):
         if userChoice == "⛰" and jarvisChoice == "✂" or userChoice == "📰" and jarvisChoice == "⛰" or userChoice == "✂" and jarvisChoice == "📰":
             return "You won!"
         elif userChoice == jarvisChoice:
