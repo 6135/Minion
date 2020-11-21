@@ -29,6 +29,9 @@ class RPS:
             return "You won!"
         elif userChoice == jarvisChoice:
             return "It's a tie!"
+        else:
+            return "You lost!"
+
 
 class coinFlip:
     async def coinFlip(self,client,message):
