@@ -22,21 +22,15 @@ async def sysinfo(client, message):
 		await message.channel.send("You don't have permission to use this command")
 		return
 	def get_size(bytes, suffix="B"):
-		"""
-		Scale bytes to its proper format
-		e.g:
-			1253656 => '1.20MB'
-			1253656678 => '1.17GB'
-		"""
 		factor = 1024
 		for unit in ["", "K", "M", "G", "T", "P"]:
 			if bytes < factor:
 				return f"{bytes:.2f}{unit}{suffix}"
 			bytes /= factor
-	botRsp = "```"
-	botRsp += f"="*5 + f"System Information" + f"="*5
 	uname = platform.uname()
-	botRsp += f"System: {uname.system}\n" +\
+	botRsp = "```"
+	botRsp += f"="*5 + f"System Information" + f"="*5 +\
+			f"\nSystem: {uname.system}\n" +\
 			f"Node Name: N/A\n" +\
 			f"Release: {uname.release}\n" +\
 			f"Version: {uname.version}\n" +\
