@@ -7,7 +7,7 @@ from discord.colour import Color
 # Import load_dotenv function from dotenv module.
 from dotenv import load_dotenv
 from dotenv.main import find_dotenv
-from Packages.MiniGames import RPS
+from Packages.MiniGames import RPS, coinFlip
 # Loads the .env file that resides on the same level as the script.
 load_dotenv(find_dotenv())
 BOT_TOKEN = os.getenv("BOT_TOKEN")
@@ -23,19 +23,19 @@ async def reactBack(client,message):
 	def checkReactBack(reaction,user):
 		return reaction.message.id == msgEmbed.id and\
 			   client.user == reaction.message.author and\
-			   "Jarvis - RB" == reaction.message.embeds[0].author.name
-
+			   "Jarvis - RB" == reaction.message.embeds[0].author.name and\
+				user == message.author
 	try:
 		reaction, user = await client.wait_for('reaction_add', timeout=120.0,check=checkReactBack)
 	except asyncio.TimeoutError:
 		await message.channel.send("You took to long to react!")
 	else: await message.channel.send("❤")
 
-#async def prune(client,message):
-#	num = re.search("^("+Jarvis().STARTING_SUBSTRING+")([A-z]*)([0-9]*)", message.content).group(2)
-#	if num is not None and int(num):
-#		while num > 0:
-#			await pass
+async def prune(client,message):
+	num = re.search("^("+Jarvis().STARTING_SUBSTRING+")([A-z]*)([0-9]*)", message.content).group(3)
+	if num is not None and int(num) and int(num) < 1000:
+		await message.channel.purge(limit=int(num))
+	else: await message.channel.send("Woah there! You can't delete more than 1000 messages at once!")
 class Jarvis(discord.Client):
 
 	async def on_ready(self):
@@ -54,6 +54,9 @@ class Jarvis(discord.Client):
 			elif funct.__name__ == "rps":
 				rps = RPS()
 				await rps.rps(client=self, message=message)
+			elif funct.__name__ == "coinFlip":
+				coin = coinFlip()
+				await coin.coinFlip(client=self, message=message)
 			else: await funct(self,message)
 
 	async def talkback(self, message):
@@ -81,9 +84,10 @@ class Jarvis(discord.Client):
 		'rd': 3,
 		'roll': 3,
 		'rolldice': 3,
-		'coin': 4,
+		'coin': coinFlip.coinFlip,
 		'help': help,
 		'rb': reactBack,
+		'prune': prune,
 	}
 
 
