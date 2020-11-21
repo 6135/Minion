@@ -37,7 +37,7 @@ async def sysinfo(client, message):
 	botRsp += f"="*5 + f"System Information" + f"="*5
 	uname = platform.uname()
 	botRsp += f"System: {uname.system}\n" +\
-			f"Node Name: {uname.node}\n" +\
+			f"Node Name: N/A\n" +\
 			f"Release: {uname.release}\n" +\
 			f"Version: {uname.version}\n" +\
 			f"Machine: {uname.machine}\n" +\
