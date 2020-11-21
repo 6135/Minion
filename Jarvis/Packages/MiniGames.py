@@ -11,20 +11,22 @@ class RPS:
         await rpsMsg.add_reaction("📰")
         await rpsMsg.add_reaction("✂")
 
-        def check(reaction):
-            return reaction.message.id==rpsMsg.id
+        def check(reaction,user):
+            return reaction.message.id==rpsMsg.id and user == message.author
 
         try:
             reaction, user = await client.wait_for('reaction_add',timeout=30.0,check=check)
         except asyncio.TimeoutError:
             await client.delete_message(message)
         else: 
-            new_message = discord.Embed(title="Rock, Paper, Scissor", description = gameResult(self,reaction.emoji),color=0xa69ea8)
+            print(reaction)
+            print(user)
+            new_message = discord.Embed(title="Rock, Paper, Scissor", description = self.gameResult(reaction.emoji),color=0xa69ea8)
             await message.edit(content=new_message)
         
 
     def gameResult(self,userChoice):
-        jarvisChoice=random.choice("⛰","📰","✂")
+        jarvisChoice=random.choice(["⛰","📰","✂"])
         if userChoice == "⛰" and jarvisChoice == "✂" or userChoice == "📰" and jarvisChoice == "⛰" or userChoice == "✂" and jarvisChoice == "📰":
             return "You won!"
         elif userChoice == jarvisChoice:

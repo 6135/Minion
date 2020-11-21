@@ -59,9 +59,6 @@ class Jarvis(discord.Client):
 				await coin.coinFlip(client=self, message=message)
 			else: await funct(self,message)
 
-	async def on_reaction_add(self,reaction,user):
-		print(reaction)
-
 	async def talkback(self, message):
 		tbSize = 8 + (len(self.STARTING_SUBSTRING))
 		await message.channel.send(message.author.name + " said: \n >" + message.content[tbSize:])
