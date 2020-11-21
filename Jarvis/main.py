@@ -32,14 +32,14 @@ async def reactBack(client,message):
 	else: await message.channel.send("❤")
 
 async def prune(client,message):
-	num = re.search("^("+Jarvis().STARTING_SUBSTRING+")([A-z]*)([0-9]*)", message.content).group(3)
-	if num is not None and int(num) and int(num) < 1000:
+	num = re.search("("+Jarvis().STARTING_SUBSTRING+")([A-z]+)( [0-9]+|[0-9]+|)", message.content).group(3)
+	if num != '' and int(num) < 101 and int(num) > 0:
 		user_perms = message.author.permissions_in(message.channel)
 		if user_perms.manage_messages is True:
 			await message.delete()
 			await message.channel.purge(limit=int(num))
 		else: await message.channel.send("You dont have permissions to run this command!")
-	else: await message.channel.send("Woah there! You can't delete more than 1000 messages at once!")
+	else: await message.channel.send("Woah there! You need to choose a number between 1 and 100, like this `prune100`")
 
 async def clean(client,message):
 	channel = message.channel
@@ -50,7 +50,6 @@ async def clean(client,message):
 		await message.delete()
 		await channel.purge(limit=100, check=is_me)
 	else: await message.channel.send("You dont have permissions to run this command!")
-
 class Jarvis(discord.Client):
 
 	async def on_ready(self):
@@ -63,7 +62,7 @@ class Jarvis(discord.Client):
 			await message.channel.send("What do you need Sir?")
 			return
 		# CHECKS IF THE MESSAGE THAT WAS SENT IS EQUAL TO "HELLO".
-		order = re.search("^("+self.STARTING_SUBSTRING+")([A-z]*)", message.content)
+		order = re.search("^("+self.STARTING_SUBSTRING+")([A-z]+)", message.content)
 		
 		if order is not None:
 			order = order.group(2).casefold()
@@ -93,12 +92,16 @@ class Jarvis(discord.Client):
 
 	async def help(self, message):
 		await message.delete()
-		embed=discord.Embed(title="Help", description="Here's a list of all help usefull commands at your disposal, all commands should start with `"+self.STARTING_SUBSTRING +"`", color=0x80ff00)
+		embed=discord.Embed(title="Help", description="Here's a list of all usefull commands at your disposal, all commands should start with `"+self.STARTING_SUBSTRING +"`", color=0x80ff00)
 		embed.set_author(name="Jarvis")
 		embed.add_field(name="`"+ self.STARTING_SUBSTRING +"talkback`", value="I will say whatever you said to me right back at you!", inline=False)
 		embed.add_field(name="`"+ self.STARTING_SUBSTRING +"hello`", value="I respond with \"Hello\" right back!", inline=False)
 		embed.add_field(name="`"+ self.STARTING_SUBSTRING +"rps`", value="Plays Rock Paper Scissors!", inline=False)
 		embed.add_field(name="`"+ self.STARTING_SUBSTRING +"coin`", value="Flips a coin, bet with your friends!", inline=False)
+		embed.add_field(name="`"+ self.STARTING_SUBSTRING +"prune X`", value="X is a number between 1 and 100, deletes said number of messages in that channel.\n\
+						Requires user to have permission to manage messages in that channel", inline=False)
+		embed.add_field(name="`"+ self.STARTING_SUBSTRING +"clean`", value="Removes all the bots messages in that channel.\n\
+						Requires user to have permission to manage messages in that channel", inline=False)				
 		embed.add_field(name="`"+ self.STARTING_SUBSTRING +"help`", value="I Think you know what this does...", inline=False)
 		
 		embed.set_footer(text="Jarvis is licensed under CC BY-NC 4.0")
