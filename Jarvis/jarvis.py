@@ -1,6 +1,6 @@
 # IMPORT DISCORD.PY. ALLOWS ACCESS TO DISCORD'S API.
 import asyncio
-from sys import platform
+import platform
 import psutil
 import os
 import discord
@@ -34,15 +34,14 @@ async def sysinfo(client, message):
 				return f"{bytes:.2f}{unit}{suffix}"
 			bytes /= factor
 	botRsp = "```"
-	if hasattr(platform,"uname"):
-		botRsp = f"="*5 + f"System Information" + f"="*5
-		uname = platform.uname()
-		botRsp += f"System: {uname.system}\n" +\
-				f"Node Name: {uname.node}\n" +\
-				f"Release: {uname.release}\n" +\
-				f"Version: {uname.version}\n" +\
-				f"Machine: {uname.machine}\n" +\
-				f"Processor: {uname.processor}\n"
+	botRsp += f"="*5 + f"System Information" + f"="*5
+	uname = platform.uname()
+	botRsp += f"System: {uname.system}\n" +\
+			f"Node Name: {uname.node}\n" +\
+			f"Release: {uname.release}\n" +\
+			f"Version: {uname.version}\n" +\
+			f"Machine: {uname.machine}\n" +\
+			f"Processor: {uname.processor}\n"
 	boot_time_timestamp = psutil.boot_time()
 	bt = datetime.fromtimestamp(boot_time_timestamp)
 	cpufreq = psutil.cpu_freq()
