@@ -10,7 +10,7 @@ from datetime import datetime
 # Import load_dotenv function from dotenv module.
 from dotenv import load_dotenv
 from dotenv.main import find_dotenv
-from Packages.MiniGames import RPS, coinFlip
+from Jarvis.Packages.MiniGames import RPS, CoinFlip
 # Loads the .env file that resides on the same level as the script.
 load_dotenv(find_dotenv())
 BOT_TOKEN = os.getenv("BOT_TOKEN")
@@ -121,10 +121,10 @@ class Jarvis(discord.Client):
 				await message.delete()
 				rps = RPS()
 				await rps.rps(client=self, message=message)
-			elif funct.__name__ == "coinFlip":
+			elif funct.__name__ == "flip":
 				await message.delete()
-				coin = coinFlip()
-				await coin.coinFlip(client=self, message=message)
+				coin = CoinFlip()
+				await coin.flip(client=self, message=message)
 			else:
 				await funct(self,message)
 		
@@ -163,7 +163,7 @@ class Jarvis(discord.Client):
 		'rd': 3,
 		'roll': 3,
 		'rolldice': 3,
-		'coin': coinFlip.coinFlip,
+		'coin': CoinFlip.flip,
 		'help': help,
 		'rb': reactBack,
 		'prune': prune,

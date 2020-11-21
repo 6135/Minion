@@ -34,20 +34,20 @@ class RPS:
             return "You lost!"
 
 
-class coinFlip:
-    async def coinFlip(self,client,message):
+class CoinFlip:
+    async def flip(self,client,message):
         choice = random.choice(["Heads!", "Tails!"])
         embed = discord.Embed(title="Coin Flip!", description = "It was... " + choice ,color=0xa69ea8)
         msgEmbed = await message.channel.send(embed=embed)
         await msgEmbed.add_reaction("♻")
 
-        def checkCoinFlip(reaction,user):
+        def checkflip(reaction,user):
             return reaction.message.id == msgEmbed.id and user == message.author and reaction.emoji == "♻"
 
         try:
-            reaction, user = await client.wait_for('reaction_add',timeout=30.0,check=checkCoinFlip)
+            reaction, user = await client.wait_for('reaction_add',timeout=30.0,check=checkflip)
         except asyncio.TimeoutError:
             pass
         else:
             await msgEmbed.delete() 
-            await self.coinFlip(client,message)
+            await self.flip(client,message)
