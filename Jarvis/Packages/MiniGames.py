@@ -51,3 +51,5 @@ class CoinFlip:
         else:
             await msgEmbed.delete() 
             await self.flip(client,message)
+
+ 
