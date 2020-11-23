@@ -4,7 +4,6 @@ import psutil
 import os
 import discord
 import re
-from discord.colour import Color
 from datetime import datetime
 from dotenv import load_dotenv
 from dotenv.main import find_dotenv
