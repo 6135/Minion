@@ -1,11 +1,8 @@
 import asyncio
 import random
 import discord
-from discord import member
-
-
 class RPS:
-    async def rps(self,client,message):
+    async def rockps(self,client,message):
         embed = discord.Embed(title="Rock, Paper, Scissor", description = "Choose a reaction to play the game!",color=0xa69ea8)
         rpsMsg=await message.channel.send(embed=embed)
         await rpsMsg.add_reaction("⛰")
@@ -25,7 +22,7 @@ class RPS:
             
             if reaction.emoji == "♻":
                 await rpsMsg.delete() 
-                await self.rps(client,message) 
+                await self.rockps(client,message) 
             else:
                 jarvisChoice=random.choice(["⛰","📰","✂"])
                 new_embed = discord.Embed(title=self.gameResult(reaction.emoji,jarvisChoice), description = reaction.emoji+" vs "+jarvisChoice,color=0xa69ea8)

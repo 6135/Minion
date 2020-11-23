@@ -8,7 +8,8 @@ from discord.colour import Color
 from datetime import datetime
 from dotenv import load_dotenv
 from dotenv.main import find_dotenv
-from MiniGames import RPS, CoinFlip
+from .MiniGames import RPS, CoinFlip
+
 async def reactBack(client,message):
 	embed=discord.Embed(title="React to this message", color=0x80ff00)
 	embed.set_author(name="Jarvis - RB")
@@ -110,7 +111,7 @@ class Jarvis(discord.Client):
 			if funct == None:
 				await message.channel.send("Your command seems incorrect, try `"+ self.STARTING_SUBSTRING + "help` for more details")
 			
-			elif funct.__name__ == "rps":
+			elif funct.__name__ == "rockps":
 				await message.delete()
 				rps = RPS()
 				await rps.rps(client=self, message=message)
@@ -152,7 +153,7 @@ class Jarvis(discord.Client):
 	BOT_KEYWORDS = {
 		'talkback': talkback,
 		'hello': hello,
-		'rps': RPS.rps,
+		'rps': RPS.rockps,
 		'rd': 3,
 		'roll': 3,
 		'rolldice': 3,
