@@ -8,7 +8,7 @@ from discord.colour import Color
 from datetime import datetime
 from dotenv import load_dotenv
 from dotenv.main import find_dotenv
-from .Packages.MiniGames import RPS, CoinFlip
+from MiniGames import RPS, CoinFlip
 
 async def reactBack(client,message):
 	embed=discord.Embed(title="React to this message", color=0x80ff00)
