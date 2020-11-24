@@ -97,7 +97,6 @@ class Jarvis(discord.Client):
 		async def on_ready(self):
 			print('Logged on as', self.user, "on", datetime.now())
 
-
 		async def on_message(self, message):
 			if message.author == self.user:
 				return
@@ -147,7 +146,6 @@ class Jarvis(discord.Client):
 							Requires user to have permission to manage messages in that channel", inline=False)				
 			embed.add_field(name="`"+ self.STARTING_SUBSTRING +"help`", value="I Think you know what this does...", inline=False)
 			
-			embed.set_footer(text="Jarvis is licensed under CC BY-NC 4.0")
 			await message.channel.send(embed=embed)
 
 
