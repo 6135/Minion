@@ -96,8 +96,6 @@ async def sysintel(client, message):
 class Jarvis(discord.Client):
 		async def on_ready(self):
 			print('Logged on as', self.user, "on", datetime.now())
-			print(vars(self))
-			cnx = con
 
 
 		async def on_message(self, message):
