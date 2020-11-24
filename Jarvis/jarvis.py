@@ -9,7 +9,7 @@ from dotenv import load_dotenv
 from dotenv.main import find_dotenv
 from MiniGames import RPS, CoinFlip
 from Food import Food
-
+import mysql.connector
 
 async def reactBack(client,message):
 	embed=discord.Embed(title="React to this message", color=0x80ff00)
@@ -92,8 +92,8 @@ async def sysintel(client, message):
 		await message.channel.send(botRsp+"```")
 	else:
 		await message.channel.send("You don't have permission to use this command")	
-class Jarvis(discord.Client):
 
+class Jarvis(discord.Client):
 		async def on_ready(self):
 			print('Logged on as', self.user, "on", datetime.now())
 
