@@ -2,7 +2,10 @@ import os
 from dotenv import load_dotenv
 from dotenv.main import find_dotenv
 import mysql.connector
-
+print(os.getenv('DB_USER'))
+print(os.getenv('DB_PASSWORD'))
+print(os.getenv('HOST_NAME'))
+print(os.getenv('DB_NAME'))
 con = mysql.connector.connect(
         user=os.getenv('DB_USER'),
         password=os.getenv('DB_PASSWORD'),
