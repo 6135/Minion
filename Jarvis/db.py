@@ -2,6 +2,7 @@ import os
 from dotenv import load_dotenv
 from dotenv.main import find_dotenv
 import mysql.connector
+print(os.getenv("BOT_TOKEN"))
 print(os.getenv('DB_USER'))
 print(os.getenv('DB_PASSWORD'))
 print(os.getenv('HOST_NAME'))
