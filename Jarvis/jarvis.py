@@ -8,7 +8,7 @@ from datetime import datetime
 from dotenv import load_dotenv
 from dotenv.main import find_dotenv
 from MiniGames import RPS, CoinFlip
-from Food import food
+from Food import Food
 from db import con
 
 async def reactBack(client,message):
@@ -167,7 +167,7 @@ class Jarvis(discord.Client):
 			'prune': prune,
 			'clean': clean,
 			'sysinfo': sysintel,
-			'food': Food.food
+			'food': Food.foods
 		}
 
 load_dotenv(find_dotenv())

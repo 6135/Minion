@@ -2,7 +2,7 @@ import discord
 
 class Food:
     foods = ['Hamburguer','Pizza','Cinnamon Rolls','Lasagna']
-    async def food(self,message): 
+    async def foods(self,message): 
         cmd = message.content.split()
         
         if 'add' in message.content:
