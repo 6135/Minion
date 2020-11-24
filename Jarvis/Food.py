@@ -17,3 +17,12 @@ class Food:
             for f in Food.foods: d+=f+"\n"
             embed = discord.Embed(title="Foods",description= d,color=0xa69ea8)
             await message.channel.send(embed=embed)
+
+    def get_recipes(self):
+        return
+    
+    def add_recipes(self):
+        return
+        
+    def update_recipes(self):
+        return
