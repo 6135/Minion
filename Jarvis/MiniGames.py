@@ -15,7 +15,7 @@ class RPS:
 
         try:
             reaction, user = await client.wait_for('reaction_add',timeout=60.0,check=checkRPS)
-            print(reaction.emoji)
+            
         except asyncio.TimeoutError:
             pass
         else:
