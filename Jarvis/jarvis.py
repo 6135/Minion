@@ -5,11 +5,10 @@ import os
 import discord
 import re
 from datetime import datetime
-import mysql.connector
 from dotenv import load_dotenv
 from dotenv.main import find_dotenv
 from MiniGames import RPS, CoinFlip
-from . import db
+import db
 
 async def reactBack(client,message):
 	embed=discord.Embed(title="React to this message", color=0x80ff00)
