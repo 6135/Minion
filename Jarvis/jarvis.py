@@ -8,7 +8,7 @@ from datetime import datetime
 from dotenv import load_dotenv
 from dotenv.main import find_dotenv
 from MiniGames import RPS, CoinFlip
-from Food import Food
+from Food import food
 from db import con
 
 async def reactBack(client,message):
