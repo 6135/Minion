@@ -1,13 +1,16 @@
 import copy
 from db import cnx
-import itertools
 class Model():
     table_name = None
     primary_key = None
 
     def __init__(self,**kwargs):
         self.table_name = type(self).__name__
-        self.primary_key = 'id'
+        attrs = vars(self)
+        if 'primary_key' in attrs:
+            self.primary_key = attrs['primary_key']
+        else: self.primary_key = 'id'
+        
         setattr(self,self.primary_key,None)
         attrs = vars(self)
         for key,value in kwargs.items():
@@ -60,17 +63,22 @@ class Model():
         column_names = [col[0] for col in desc]
         data = [dict(zip(column_names, row)) for row in cursor.fetchall()]
         return [self.instance(**obj) for obj in data]
-        
+
+    def instance(self,**vals):
+        return self.__class__(**vals)
 
     def order_by():
         pass
-    
-    def instance(self,**vals):
-        properties = copy.deepcopy(vars(self))
-        properties.pop('table_name')
-        properties.pop('primary_key')
-        return self.__class__(**vals)
 
+    def update(self):
+        self.delete()
+        self.save()
+
+    def delete(self):
+        if getattr(self,self.primary_key) is not None:
+            pass
+
+        
     def __str__(self):
         return self.table_name
 
@@ -94,6 +102,7 @@ class Recipe(Model):
 
     def __repr__(self):
         return self.__str__()
+
 # class Queue(Model):
 
 #     def __init__(self,**kwargs):
