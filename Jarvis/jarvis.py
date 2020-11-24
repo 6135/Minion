@@ -8,7 +8,7 @@ from datetime import datetime
 import mysql.connector
 from dotenv import load_dotenv
 from dotenv.main import find_dotenv
-from .MiniGames import RPS, CoinFlip
+from MiniGames import RPS, CoinFlip
 from . import db
 
 async def reactBack(client,message):
