@@ -20,7 +20,7 @@ class Queuer():
             await message.channel.send(embed=embed)
             return 
         queue_id = f"{str(mention_id)}-{message.guild.id}"
-        if self.exists(queue_id):
+        if self.exists(queue_id) and len(Queue(queue_id=queue_id).get_all()) > 0:
             list_members = f"The positions in <@!{queue_id}>'s queue are as follows:\n```md\n"
             all_members = Queue(queue_id=queue_id).get_all()
             member_pos = 1
@@ -32,7 +32,7 @@ class Queuer():
                 member_pos+=1
             list_members+="\n```"
             await message.channel.send(list_members)
-        else: await message.channel.send("FAILED")
+        else: await message.channel.send("The queue doesn't exist or is empty")
 
     async def create(self,client,message):
         sqlQuery = f"""
