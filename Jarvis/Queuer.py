@@ -21,7 +21,7 @@ class Queuer():
             return 
         queue_id = f"{str(mention_id)}-{message.guild.id}"
         if self.exists(queue_id) and len(Queue(queue_id=queue_id).get_all()) > 0:
-            list_members = f"The positions in <@!{queue_id}>'s queue are as follows:\n```md\n"
+            list_members = f"The positions in <@!{mention_id}>'s queue are as follows:\n```md\n"
             all_members = Queue(queue_id=queue_id).get_all()
             member_pos = 1
             for member in all_members:
