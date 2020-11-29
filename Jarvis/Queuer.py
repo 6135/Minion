@@ -78,14 +78,14 @@ class Queuer():
             await message.channel.send(embed=embed)
             return
         queue_id = f"{str(mention_id)}-{message.guild.id}"
-        if self.exists(queue_id):
+        if self.exists(queue_id) and len(Queue(queue_id=queue_id).get_all()) > 0:
             if len(Queue(queue_id=queue_id).get(memberID=str(message.author.id))) > 0:
                 await message.channel.send("You're already in this queue!")
             else:
                 Queue(queue_id=queue_id,memberID=message.author.id,priority=1).save()
                 position = len(Queue(queue_id=queue_id).get_all())
                 await message.channel.send(f"You have joined the queue!, your spot is: {position}")
-        else: await message.channel.send(f"FAILED!")
+        else: await message.channel.send("The queue doesn't exist or is empty")
         return
 
     async def clear(self,client,message):
