@@ -89,7 +89,29 @@ class Queuer():
         return
 
     async def clear(self,client,message):
-        await self.create(client,message)
+        sqlQuery = f"""
+            DROP TABLE IF EXISTS `Queue-{message.author.id}-{message.guild.id}`"""
+        cursor = cnx.cursor()
+        cursor.execute(sqlQuery)
+        sqlQuery = f"""
+            CREATE TABLE `Queue-{message.author.id}-{message.guild.id}` (
+            `id` int(11) NOT NULL,
+            `memberID` varchar(64) NOT NULL,
+            `priority` int(11) NOT NULL
+            ) ENGINE=InnoDB DEFAULT CHARSET=latin1"""
+        cursor = cnx.cursor()
+        cursor.execute(sqlQuery)
+        sqlQuery = f"""
+            ALTER TABLE `Queue-{message.author.id}-{message.guild.id}`
+            ADD PRIMARY KEY (`id`)"""     
+        cursor = cnx.cursor()
+        cursor.execute(sqlQuery)    
+        sqlQuery = f"""
+            ALTER TABLE `Queue-{message.author.id}-{message.guild.id}`
+            MODIFY `id` int(11) NOT NULL AUTO_INCREMENT"""
+        cursor = cnx.cursor()
+        cursor.execute(sqlQuery)   
+        await message.channel.send("Queue cleared. Have a nice day!")
 
     async def next(self,client,message):
         pass
