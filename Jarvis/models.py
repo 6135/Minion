@@ -36,7 +36,7 @@ class Model():
 			table_columns+=key+","
 
 		table_columns = table_columns.rstrip(',')
-		sqlQuery = "INSERT INTO " + self.table_name + " (" + table_columns + ") VALUES (" + "%s,"*(propNum-1) + "%s)"
+		sqlQuery = f"INSERT INTO {self.table_name} ({table_columns}) VALUES (" + "%s,"*(propNum-1) + "%s)"
 		vals = list()
 		for value in properties.values():
 			vals.append(str(value))
@@ -46,7 +46,7 @@ class Model():
 		cnx.commit()
 
 	def get_one(self,pk):
-		sqlQuery = "SELECT * FROM " + self.table_name + " WHERE " + self.primary_key + " = %s"
+		sqlQuery = f"SELECT * FROM {self.table_name} WHERE {self.primary_key} = " + "%s"
 		cursor = cnx.cursor()
 		cursor.execute(sqlQuery,[pk])
 		desc = cursor.description
@@ -55,7 +55,7 @@ class Model():
 		return [self.instance(**obj) for obj in data][0]
 
 	def order_by(self,*colum_names, ascending : bool = True):
-		sqlQuery = "SELECT * FROM " + self.table_name + " ORDER BY " 
+		sqlQuery = f"SELECT * FROM {self.table_name} ORDER BY " 
 		num_columns = len(colum_names)
 		for key in colum_names:
 			sqlQuery += key
@@ -88,7 +88,7 @@ class Model():
 		return self.__class__(**vals)
 		
 	def get(self, **conditions):
-		sqlQuery = "SELECT * FROM " + self.table_name + " WHERE "
+		sqlQuery = f"SELECT * FROM {self.table_name} WHERE "
 		num_conditions = len(conditions)
 		for key,value in conditions.items():
 			sqlQuery += key + " = \'" + value + "\' "
@@ -147,11 +147,11 @@ class IngredientsRecipes(Model):
 		self.table_name='ingredients_recipesEsconder'
 class Queue(Model):
 
-	def __init__(self,queue_owner_id,**kwargs):
+	def __init__(self,queue_id,**kwargs):
 		self.memberID = None
 		self.priority = None
 		super().__init__(**kwargs)
-		self.table_name = f'`Queue-{str(queue_owner_id)}`'
+		self.table_name = f'`Queue-{queue_id}`'
 
 	def __str__(self):
 		return f"memberID: {self.memberID}"
@@ -160,7 +160,7 @@ class Queue(Model):
 		return self.__str__()
 
 	def instance(self,**vals):
-		instance = self.__class__(queue_owner_id='0',**vals)
+		instance = self.__class__(queue_id='0',**vals)
 		instance.table_name = self.table_name
 		return instance
 

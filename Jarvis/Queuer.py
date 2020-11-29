@@ -19,11 +19,10 @@ class Queuer():
             embed.add_field(name='Example:', value=f"{self.STARTING_SUBSTRING}peek <@!{message.author.id}>", inline=True)
             await message.channel.send(embed=embed)
             return 
-        queue_owner = str(mention_id)
-       
-        if self.exists(user_id=queue_owner):
-            list_members = f"The positions in <@!{queue_owner}>'s queue are as follows:\n```md\n"
-            all_members = Queue(queue_owner_id=queue_owner).get_all()
+        queue_id = f"{str(mention_id)}-{message.guild.id}"
+        if self.exists(queue_id):
+            list_members = f"The positions in <@!{queue_id}>'s queue are as follows:\n```md\n"
+            all_members = Queue(queue_id=queue_id).get_all()
             member_pos = 1
             for member in all_members:
                 member_id = member.memberID
@@ -37,11 +36,11 @@ class Queuer():
 
     async def create(self,client,message):
         sqlQuery = f"""
-            DROP TABLE IF EXISTS `Queue-{message.author.id}`"""
+            DROP TABLE IF EXISTS `Queue-{message.author.id}-{message.guild.id}`"""
         cursor = cnx.cursor()
         cursor.execute(sqlQuery)
         sqlQuery = f"""
-            CREATE TABLE `Queue-{message.author.id}` (
+            CREATE TABLE `Queue-{message.author.id}-{message.guild.id}` (
             `id` int(11) NOT NULL,
             `memberID` varchar(64) NOT NULL,
             `priority` int(11) NOT NULL
@@ -49,23 +48,23 @@ class Queuer():
         cursor = cnx.cursor()
         cursor.execute(sqlQuery)
         sqlQuery = f"""
-            ALTER TABLE `Queue-{message.author.id}`
+            ALTER TABLE `Queue-{message.author.id}-{message.guild.id}`
             ADD PRIMARY KEY (`id`)"""     
         cursor = cnx.cursor()
         cursor.execute(sqlQuery)    
         sqlQuery = f"""
-            ALTER TABLE `Queue-{message.author.id}`
+            ALTER TABLE `Queue-{message.author.id}-{message.guild.id}`
             MODIFY `id` int(11) NOT NULL AUTO_INCREMENT"""
         cursor = cnx.cursor()
         cursor.execute(sqlQuery)   
         await message.channel.send("Queue created. Have a nice day!")
 
-    def exists(self,user_id): #NOT A COMMAND
+    def exists(self,queue_id): #NOT A COMMAND
         cursor = cnx.cursor()
         sqlQuery = f"""
             SELECT COUNT(*)
             FROM information_schema.tables
-            WHERE table_name = \'Queue-{user_id}\'"""
+            WHERE table_name = \'Queue-{queue_id}\'"""
         cursor.execute(sqlQuery)
         return cursor.fetchone()[0]==1
 
@@ -78,13 +77,13 @@ class Queuer():
             embed.add_field(name='Example:', value=f"{self.STARTING_SUBSTRING}joinqueue <@!{message.author.id}>", inline=True)
             await message.channel.send(embed=embed)
             return
-        queue_owner = str(mention_id)
-        if self.exists(user_id=queue_owner):
-            if Queue(queue_owner_id=queue_owner).get(memberID=str(message.author.id))[0] is not None:
+        queue_id = f"{str(mention_id)}-{message.guild.id}"
+        if self.exists(queue_id):
+            if Queue(queue_id=queue_id).get(memberID=str(message.author.id))[0] is not None:
                 await message.channel.send("You're already in this queue!")
             else:
-                Queue(queue_owner_id=queue_owner,memberID=message.author.id,priority=1).save()
-                position = len(Queue(queue_owner_id=queue_owner).get_all())
+                Queue(queue_id=queue_id,memberID=message.author.id,priority=1).save()
+                position = len(Queue(queue_id=queue_id).get_all())
                 await message.channel.send(f"You have joined the queue!, your spot is: {position}")
         else: await message.channel.send(f"FAILED!")
         return

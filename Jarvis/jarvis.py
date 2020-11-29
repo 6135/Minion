@@ -20,7 +20,7 @@ class Jarvis(discord.Client):
 
 	async def on_message(self, message):
 		if message.author == self.user:
-			return
+			return 
 		if "jarvis?" in message.content.casefold():
 			await message.channel.send("What do you need Sir?")
 			return
