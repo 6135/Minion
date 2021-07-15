@@ -32,8 +32,6 @@ git clone https://github.com/6135/Jarvis
 
 3. Entrar na pasta do projeto
 
-```SH
-```
 
 4. Criar o ambiente do projeto (venv)
 
@@ -108,11 +106,11 @@ Para ligar a uma base de dados MySQL local, por exemplo, o .env pode ser:
 ```
 DATABASE_URL=mysql://user:password@localhost:3306/db
 SECRET_KEY=q1^j3mv#y9-n&^*j)-rd3@lqqu@jv49p_99$mefzljeuz#fra3
-EMAIL_HOST_USER=suporte.dia.aberto@gmail.com
-EMAIL_HOST_PASSWORD=password # Pedir ao Barrocas
+EMAIL_HOST_USER=email@gmail.com
+EMAIL_HOST_PASSWORD=password
 ```
 
-9. Gerar uma nova SECRET_KEY aleatória (https://djecrety.ir/) e substituí-la no .env
+9. Gerar uma nova SECRET_KEY aleatória
 
 ## Comandos fundamentais
 
